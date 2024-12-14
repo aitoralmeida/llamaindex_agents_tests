@@ -23,12 +23,13 @@ TODO:
         * Try Agents
 
 """
-
+# gets the api_key for open_ai from the config.ini file
 def get_api_key():
     config = configparser.ConfigParser()
     config.read('config.ini')
     return config['OPEN_AI']['api_key']
 
+# extracts the pseudocode and the complexity from a picture
 def extract_image_text(llm, img_path):
     messages = ChatMessage(
         role=MessageRole.USER,
@@ -40,7 +41,7 @@ def extract_image_text(llm, img_path):
     response = llm.chat([messages])
     return response
 
-
+# evaluates a solution, without providing feedback.
 def get_exercise_evaluation(llm, prompt, exercise, solution):
     messages = [
         ChatMessage(
@@ -51,6 +52,7 @@ def get_exercise_evaluation(llm, prompt, exercise, solution):
     evaluation = llm.chat(messages)
     return evaluation
 
+# uses the evaluation to provide feedback on how to improve the solution
 def get_exercise_feedback(llm, prompt, exercise, solution, evaluation):
     messages = [
         ChatMessage(
@@ -60,7 +62,6 @@ def get_exercise_feedback(llm, prompt, exercise, solution, evaluation):
     ]
     feedback = llm.chat(messages)
     return feedback
-
 
 if __name__ == '__main__':
     # gpt-4o
