@@ -41,6 +41,18 @@ def extract_image_text(llm, img_path):
     response = llm.chat([messages])
     return response
 
+# checks if the transcribed text is correct
+def check_text_image(llm, img_path, img_text):
+    messages = ChatMessage(
+        role=MessageRole.USER,
+        blocks=[
+            TextBlock(text=Prompts.IMAGE_CHECKER_PROMPT + "\r\nThe test extracted from the image is:\r\n" + img_text + "\r\nIs it correct?"),
+            ImageBlock(path=img_path, image_mimetype="image/jpeg"),
+        ],
+    )
+    response = llm.chat([messages])
+    return response
+
 # evaluates a solution, without providing feedback.
 def get_exercise_evaluation(llm, prompt, exercise, solution):
     messages = [
@@ -80,6 +92,9 @@ if __name__ == '__main__':
         pseudocode = extract_image_text(llm, img_path)
         print ("Extracted text:")
         print (pseudocode)
+        check = check_text_image(llm, img_path, str(pseudocode))
+        print("\r\nIs the transcribed text correct?")
+        print(check)
         evaluation = get_exercise_evaluation(llm, Prompts.EVALUATOR_PROMPT, str(pseudocode), Prompts.SOLUTION_1_BAD_PROMPT)
         print (Prompts.EVALUATION_HEADER + str(evaluation))
         feedback = get_exercise_feedback(llm, Prompts.FEEDBACK_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT, str(evaluation))
