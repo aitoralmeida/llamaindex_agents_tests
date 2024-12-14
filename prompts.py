@@ -12,6 +12,11 @@ class Prompts:
     Don't change the original text, make sure that the trancribed text is the same.
     """
 
+    IMAGE_CHECKER_PROMPT = """You are a helpful agent. You are going to receive and image and some text. 
+    You need to check if the text that you receive is the same one as the one in the image.
+    If they are different, what are the differences?
+    """
+
     # Prompt for the evaluator agent
     EVALUATOR_PROMPT = """You are a helpful agent. You are evaluation pseudocode exercises for first year computer science students.
     You are going to receive the exercise and the pseudocode solution in this format:
