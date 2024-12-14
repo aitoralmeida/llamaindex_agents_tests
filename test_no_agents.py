@@ -83,7 +83,7 @@ if __name__ == '__main__':
     # If true, it expects a picture of the pseudocode, if false, it expects text.
     use_image = True
 
-    if use_image:
+    if use_image: #this is not working, is keeps correcting the transcribed pseudocode
         llm = OpenAI(
             model="gpt-4o",
             api_key= get_api_key()

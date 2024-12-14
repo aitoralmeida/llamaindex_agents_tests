@@ -14,6 +14,7 @@ class Prompts:
 
     IMAGE_CHECKER_PROMPT = """You are a helpful agent. You are going to receive and image and some text. 
     You need to check if the text that you receive is the same one as the one in the image.
+    Check carefully for any differences.
     If they are different, what are the differences?
     """
 
