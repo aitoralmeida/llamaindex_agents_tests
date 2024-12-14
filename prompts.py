@@ -1,4 +1,7 @@
 # Class containing the prompts used in the texts
+# Expected formats:
+# To get the evaluation of an exercise: [EXERCISE]: description of the exercise [SOLUTION]: pseudocode with the solution. 
+# To get the feedback of an exercise: [EXERCISE]: description of the exercise [SOLUTION]: pseudocode with the solution. [EVALUATION]: Your evaluation goes here
 class Prompts:
     # Prompt for the evaluator agent
     EVALUATOR_PROMPT = """You are a helpful agent. You are evaluation pseudocode exercises for first year computer science students.
@@ -8,9 +11,7 @@ class Prompts:
     You are going to evaluate the correctness of the solution, what is wrong, and the complexity.
     You are not going to provide any feedback on how to improve the solution. 
     The arrays in the pseudocode are going to start in index 1, not 0.
-    You are going to follow this format:
-    [EXERCISE]: description of the exercise [SOLUTION]: pseudocode with the solution. [EVALUATION]: Your evaluation goes here
-    See that you need to include the exercise and the solution in your reply, in that format."""
+    """
 
     # Prompt for the feedback agent
     FEEDBACK_PROMPT = """You are a helpful agent. You are providing feedback for pseudocode exercises for first year computer science students.
@@ -20,16 +21,22 @@ class Prompts:
     The arrays in the pseudocode are going to start in index 1, not 0.
     You are going to provide feedback looking at the evaluation, on how to improve the pseudocode and how the student can make their solution better.
     You are only providing feedback, not changing the evaluation or any other part.
-    You are going to follow this format to provide the feedback:
-    [FEEDBACK]: Your feedback goes here.
-    You need to follow that format for the feedback."""
+    """
+
+    # Header for the exercise description section
+    EXERCISE_HEADER = "[EXERCISE]: "
+    # Header for the solution section
+    SOLUTION_HEADER = "\r\n[SOLUTION]: \r\n"
+    # Header for the evaluation section
+    EVALUATION_HEADER = "\r\n[EVALUATION]: "
+    # Header for the feedback section
+    FEEDBACK_HEADER =  "[FEEDBACK]: "
 
     # Exercise to be solved
-    EXERCISE_PROMPT = "[EXERCISE]: Provide the pseudocode for the bubble sort algorithms and the O complexity of your solution."
+    EXERCISE_1_PROMPT = "Provide the pseudocode for the bubble sort algorithms and the O complexity of your solution."
 
     # A correct solution for the exercise
-    SOLUTION_OK_PROMPT = """[SOLUTION]: \r\n
-                            BUBBLE-SORT(A): \n\r
+    SOLUTION_1_OK_PROMPT = """BUBBLE-SORT(A): \n\r
                                 for i = 1 to A.length-1 \n\r
                                     sorted = false \n\r" +
                                     for j = 1 to A.length-i \n\r
@@ -41,8 +48,7 @@ class Prompts:
                             The complexity of my algorithm is O(n^2) """
 
     # An incorrect solution for the exercise
-    SOLUTION_BAD_PROMPT =  """[SOLUTION]: \r\n
-                            BUBBLE-SORT(A): \n\r
+    SOLUTION_1_BAD_PROMPT =  """BUBBLE-SORT(A): \n\r
                                 for i = 1 to A.length - 3 \n\r
                                     sorted = false \n\r" +
                                     for j = 1 to A.length-i \n\r

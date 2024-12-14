@@ -6,16 +6,44 @@ import configparser
 
 from prompts import Prompts
 
-config = configparser.ConfigParser()
-config.read('config.ini')
+def get_api_key():
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    return config['OPEN_AI']['api_key']
+
+def get_exercise_evaluation(llm, prompt, exercise, solution):
+    messages = [
+        ChatMessage(
+            role="system", content=prompt
+        ),
+        ChatMessage(role="user", content=Prompts.EXERCISE_HEADER + exercise + Prompts.SOLUTION_HEADER + solution),
+    ]
+    evaluation = llm.chat(messages)
+    return evaluation
+
+def get_exercise_feedback(llm, prompt, exercise, solution, evaluation):
+    messages = [
+        ChatMessage(
+            role="system", content=prompt
+        ),
+        ChatMessage(role="user", content=Prompts.EXERCISE_HEADER + exercise + Prompts.SOLUTION_HEADER + solution + Prompts.EVALUATION_HEADER + evaluation),
+    ]
+    feedback = llm.chat(messages)
+    return feedback
+
 
 
 llm = OpenAI(
     model="gpt-4o-mini",
-    api_key=config['OPEN_AI']['api_key']
+    api_key= get_api_key()
 )
 
-messages = [
+evaluation = get_exercise_evaluation(llm, Prompts.EVALUATOR_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT)
+print (Prompts.EVALUATION_HEADER + str(evaluation))
+feedback = get_exercise_feedback(llm, Prompts.FEEDBACK_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT, str(evaluation))
+print (Prompts.FEEDBACK_HEADER + str(feedback))
+
+""" messages = [
     ChatMessage(
         role="system", content=Prompts.EVALUATOR_PROMPT
     ),
@@ -36,4 +64,4 @@ feedback = llm.chat(messages)
 
 print("\r\n"+"*" * 50) 
 print("******Feedback********\r\n")
-print (feedback)
+print (feedback) """
