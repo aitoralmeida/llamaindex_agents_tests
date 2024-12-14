@@ -33,6 +33,8 @@ def get_exercise_feedback(llm, prompt, exercise, solution, evaluation):
 
 
 if __name__ == '__main__':
+    #gpt-4o
+    #gpt-4o-mini
     llm = OpenAI(
         model="gpt-4o-mini",
         api_key= get_api_key()
