@@ -32,36 +32,15 @@ def get_exercise_feedback(llm, prompt, exercise, solution, evaluation):
     return feedback
 
 
+if __name__ == '__main__':
+    llm = OpenAI(
+        model="gpt-4o-mini",
+        api_key= get_api_key()
+    )
 
-llm = OpenAI(
-    model="gpt-4o-mini",
-    api_key= get_api_key()
-)
+    evaluation = get_exercise_evaluation(llm, Prompts.EVALUATOR_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT)
+    print (Prompts.EVALUATION_HEADER + str(evaluation))
+    feedback = get_exercise_feedback(llm, Prompts.FEEDBACK_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT, str(evaluation))
+    print (Prompts.FEEDBACK_HEADER + str(feedback))
 
-evaluation = get_exercise_evaluation(llm, Prompts.EVALUATOR_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT)
-print (Prompts.EVALUATION_HEADER + str(evaluation))
-feedback = get_exercise_feedback(llm, Prompts.FEEDBACK_PROMPT, Prompts.EXERCISE_1_PROMPT, Prompts.SOLUTION_1_BAD_PROMPT, str(evaluation))
-print (Prompts.FEEDBACK_HEADER + str(feedback))
 
-""" messages = [
-    ChatMessage(
-        role="system", content=Prompts.EVALUATOR_PROMPT
-    ),
-    ChatMessage(role="user", content=Prompts.EXERCISE_PROMPT + " \r\n" + Prompts.SOLUTION_BAD_PROMPT),
-]
-evaluation = llm.chat(messages)
-print("*" * 50) 
-print("******EVALUTION********\r\n")
-print (str(evaluation))
-
-messages = [
-    ChatMessage(
-        role="system", content=Prompts.FEEDBACK_PROMPT
-    ),
-    ChatMessage(role="user", content=str(evaluation)),
-]
-feedback = llm.chat(messages)
-
-print("\r\n"+"*" * 50) 
-print("******Feedback********\r\n")
-print (feedback) """
