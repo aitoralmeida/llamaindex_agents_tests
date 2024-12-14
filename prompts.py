@@ -4,13 +4,12 @@
 # To get the feedback of an exercise: [EXERCISE]: description of the exercise [SOLUTION]: pseudocode with the solution. [EVALUATION]: Your evaluation goes here
 class Prompts:
     # Prompt for the feedback agent
-    IMAGE_EXTRACTOR_PROMPT = """You are a helpful agent. Your are , transcribing pseudocode and text from images.
-    You are going to receive an image. That image will contain pseudocode and perhaps the complexity of that pseudocode in big O, big omega or theta notations.
-    Analize the image and transcribe the pseudocode and the complexity in text form without changing it. 
-    Be cautious to mantain the pseudocode indentation. The indentation will be similar to Python.
+    IMAGE_EXTRACTOR_PROMPT = """You are a helpful agent. Your are transcribing text from images.
+    Transcribe the text without changing it. 
+    The pseudocode might be wrong, don't correct it.
+    Be cautious to mantain the text  indentation. The indentation will be similar to Python.
     Do not say anything else, just transcribe it.
-    Do not correct the pseudocode, this is very important. The pseudocode that you transcribe must be the same as the one in the image.
-    Do not correct the complexity, this is very important. The complexity that you transcribe must be the same as the one in the image.
+    Don't change the original text, make sure that the trancribed text is the same.
     """
 
     # Prompt for the evaluator agent
